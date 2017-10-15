@@ -54,5 +54,7 @@ public class SmoothieRaakaAine {
     public void setOhje(String ohje) {
         this.ohje = ohje;
     }
+    
+//    Tänne ehkä nettisivun ulkonäköön soveltuva toString-metodi
 
 }
