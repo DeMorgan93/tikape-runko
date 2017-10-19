@@ -42,22 +42,22 @@ public class SmoothieRaakaAineDao {
         return juomanTiedot;
     }
 
-    public void deleteSmoothie(Smoothie juoma) throws SQLException {
+    public void deleteSmoothie(Integer juoma) throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM SmoothieRaakaAine WHERE smoothie_id = ?");
 
-        stmt.setInt(1, juoma.getId());
+        stmt.setInt(1, juoma);
         stmt.executeUpdate();
 
         stmt.close();
         conn.close();
     }
 
-    public void deleteRaakaAine(RaakaAine raakis) throws SQLException {
+    public void deleteRaakaAine(Integer raakis) throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM SmoothieRaakaAine WHERE raaka_aine_id = ?");
 
-        stmt.setInt(1, raakis.getId());
+        stmt.setInt(1, raakis);
         stmt.executeUpdate();
 
         stmt.close();

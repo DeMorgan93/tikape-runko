@@ -18,42 +18,24 @@ public class SmoothieRaakaAine {
     public Integer getRaakaAineId() {
         return raaka_aine_id;
     }
-
-    public void setRaakaAineId(Integer id) {
-        this.raaka_aine_id = id;
-    }
     
     public Integer getSmoothieId() {
         return smoothie_id;
-    }
-
-    public void setSmoothieId(Integer id) {
-        this.smoothie_id = id;
     }
 
     public String getJarjestys() {
         return jarjestys;
     }
 
-    public void setJarjestys(String jarjestys) {
-        this.jarjestys = jarjestys;
-    }
     
     public String getMaara() {
         return maara;
-    }
-
-    public void setMaara(String maara) {
-        this.maara = maara;
     }
     
     public String getOhje() {
         return ohje;
     }
 
-    public void setOhje(String ohje) {
-        this.ohje = ohje;
-    }
     
 //    Tänne ehkä nettisivun ulkonäköön soveltuva toString-metodi
 
