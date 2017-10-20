@@ -10,6 +10,8 @@ import tikape.runko.database.OpiskelijaDao;
 import tikape.runko.database.RaakaAineDao;
 import tikape.runko.database.SmoothieDao;
 import tikape.runko.database.SmoothieRaakaAineDao;
+import tikape.runko.domain.RaakaAine;
+import tikape.runko.domain.Smoothie;
 
 public class Main {
 
@@ -31,7 +33,9 @@ public class Main {
         }, new ThymeleafTemplateEngine());
 
         Spark.post("/raakikset", (req, res) -> {
-            raakaAineet.save(req.queryParams("name"));
+            String nimi = req.queryParams("name");
+            RaakaAine raakis = new RaakaAine(-1, nimi);
+            raakaAineet.saveOrUpdate(raakis);
 
             res.redirect("/raakikset");
             return "";
@@ -60,7 +64,9 @@ public class Main {
         }, new ThymeleafTemplateEngine());
         
         Spark.post("/toiminnot", (req, res) -> {
-            smoothies.save(req.queryParams("name"));
+            String nimi = req.queryParams("name");
+            Smoothie juoma = new Smoothie(-1, nimi);
+            smoothies.saveOrUpdate(juoma);
 
             res.redirect("/toiminnot");
             return "";

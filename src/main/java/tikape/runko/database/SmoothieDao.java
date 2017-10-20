@@ -73,32 +73,37 @@ public class SmoothieDao implements Dao<Smoothie, Integer> {
         conn.close();
     }
     
-    public Smoothie save(String nimi) throws SQLException {
+    public Smoothie saveOrUpdate(Smoothie object) throws SQLException {
+        // simply support saving -- disallow saving if user with 
+        // same name exists
+        Smoothie byName = findByName(object.getNimi());
 
-        Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Smoothie (nimi) VALUES (?)");
-        stmt.setString(1, nimi);
+        if (byName != null) {
+            return byName;
+        }
 
-        stmt.executeUpdate();
-        stmt.close();
+        try (Connection conn = database.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Smoothie (nimi) VALUES (?)");
+            stmt.setString(1, object.getNimi());
+            stmt.executeUpdate();
+        }
 
-        stmt = conn.prepareStatement("SELECT * FROM Smoothie WHERE nimi = ?");
-        stmt.setString(1, nimi);
+        return findByName(object.getNimi());
 
-        ResultSet rs = stmt.executeQuery();
-        rs.next(); // vain 1 tulos
+    }
 
-        Integer id = rs.getInt("id");
-        String tieto = rs.getString("nimi");
+    private Smoothie findByName(String name) throws SQLException {
+        try (Connection conn = database.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT id, nimi FROM Smoothie WHERE nimi = ?");
+            stmt.setString(1, name);
 
-        Smoothie juoma = new Smoothie(id, nimi);
+            ResultSet result = stmt.executeQuery();
+            if (!result.next()) {
+                return null;
+            }
 
-        stmt.close();
-        rs.close();
-
-        conn.close();
-
-        return juoma;
+            return new Smoothie(result.getInt("id"), result.getString("nimi"));
+        }
     }
 }
 
