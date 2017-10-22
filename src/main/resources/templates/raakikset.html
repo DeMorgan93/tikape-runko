@@ -2,11 +2,83 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
+                <style>
+    body {
+    background-color: lightblue;
+    }
+
+    h1 {
+    color: maroon;
+    margin-left: 40px;
+    } 
+    
+    #navbar {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: lightseagreen; 
+    }
+    
+    li.navlist {
+        float: left; 
+        border-right: 1px solid #bbb;
+    }
+    
+    li.navlist a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+    
+        li.navlista {
+        float: left; 
+        border-right: 1px solid #bbb;
+    }
+    
+        li.navlista a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        background-color: green;
+    }
+    
+        li.navlista a:hover {
+        background-color: #111;
+    }
+    
+    li.navlist a:hover {
+        background-color: #111;
+    }
+        
+    </style>
         <title>Otsikko</title>
         <meta charset="utf-8" />
     </head>
 
     <body>
+        
+         <ul id="navbar">
+          <li class="navlist">
+                <a th:href="@{~/paasivu}">
+                    Paasivu
+                </a>
+          </li>
+          <li class="navlist">
+                <a th:href="@{~/toiminnot}">
+                    Luo uusi smoothie
+                </a>
+          </li>
+          <li class="navlista">
+                <a th:href="@{~/raakikset}">
+                    Tarkastele ja lisaa raaka-aineita
+                </a>
+          </li>  
+        </ul>
         <h1>Raaka-aineet</h1>
 
         <ul>
