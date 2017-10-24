@@ -55,7 +55,7 @@ public class Main {
 
             return new ModelAndView(map, "paasivu");
         }, new ThymeleafTemplateEngine());
-        
+               
         Spark.get("/toiminnot", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("smoothiet", smoothies.findAll());
@@ -72,7 +72,13 @@ public class Main {
             return "";
         });
         
-
+        Spark.get("/smoothie/:id", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("smoothiet", smoothies.findAll());
+            return new ModelAndView(map, "smoothie");
+            
+        }, new ThymeleafTemplateEngine());     
+   
 //        get("/", (req, res) -> {
 //            HashMap map = new HashMap<>();
 //            map.put("viesti", "tervehdys");
