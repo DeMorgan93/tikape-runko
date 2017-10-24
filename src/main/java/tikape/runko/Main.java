@@ -51,6 +51,13 @@ public class Main {
             res.redirect("/raakikset");
             return "";
         });
+        Spark.post("/smoothie/:id", (req, res) -> {
+            Integer id = Integer.parseInt(req.params(":id"));
+            smoothies.delete(id);
+            smoothieRaakaAineet.deleteRaakaAine(id);
+            res.redirect("/toiminnot");
+            return "";
+        });
 
         Spark.get("/paasivu", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -82,7 +89,7 @@ public class Main {
             String jarjestys = req.queryParams("jarjestys");
             String maara = req.queryParams("maara");
             String ohje = req.queryParams("ohje");
-            
+
             smoothieRaakaAineet.save(new SmoothieRaakaAine(raakisId, smoothieId, jarjestys, maara, ohje));
 
             res.redirect("/toiminnot");
