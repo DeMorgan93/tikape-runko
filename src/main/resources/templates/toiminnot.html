@@ -2,81 +2,81 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-                <style>
-    body {
-    background-color: lightblue;
-    }
+        <style>
+            body {
+                background-color: lightblue;
+            }
 
-    h1 {
-    color: maroon;
-    margin-left: 40px;
-    } 
-    
-    #navbar {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: lightseagreen; 
-    }
-    
-    li.navlist {
-        float: left; 
-        border-right: 1px solid #bbb;
-    }
-    
-    li.navlist a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
-    
-        li.navlista {
-        float: left; 
-        border-right: 1px solid #bbb;
-    }
-    
-        li.navlista a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        background-color: green;
-    }
-    
-        li.navlista a:hover {
-        background-color: #111;
-    }
-    
-    li.navlist a:hover {
-        background-color: #111;
-    }
-        
-    </style>
+            h1 {
+                color: maroon;
+                margin-left: 40px;
+            } 
+
+            #navbar {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: lightseagreen; 
+            }
+
+            li.navlist {
+                float: left; 
+                border-right: 1px solid #bbb;
+            }
+
+            li.navlist a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+            li.navlista {
+                float: left; 
+                border-right: 1px solid #bbb;
+            }
+
+            li.navlista a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                background-color: green;
+            }
+
+            li.navlista a:hover {
+                background-color: #111;
+            }
+
+            li.navlist a:hover {
+                background-color: #111;
+            }
+
+        </style>
         <title>Otsikko</title>
         <meta charset="utf-8" />
     </head>
 
     <body>
-         <ul id="navbar">
-          <li class="navlist">
+        <ul id="navbar">
+            <li class="navlist">
                 <a th:href="@{~/paasivu}">
                     Paasivu
                 </a>
-          </li>
-          <li class="navlista">
+            </li>
+            <li class="navlista">
                 <a th:href="@{~/toiminnot}">
                     Luo uusi smoothie
                 </a>
-          </li>
-          <li class="navlist">
+            </li>
+            <li class="navlist">
                 <a th:href="@{~/raakikset}">
                     Tarkastele ja lisaa raaka-aineita
                 </a>
-          </li>  
+            </li>  
         </ul>
 
         <h1>Smoothielista (DIY Smoothiet)</h1>
@@ -91,7 +91,7 @@
                 </form>
             </li>
         </ul>
-        
+
         <h4>Lisaa uusi</h4>
 
         <form method="POST" action="/toiminnot">
@@ -99,7 +99,34 @@
             <input type="text" name="name"/><br/>
             <input type="submit" value="Add!"/>
         </form>
-        
+        <h4>Lisaa raaka-aineita</h4>
+        <form method="POST" action="/toiminnot/data">
+            Smoothien nimi:<br/>
+            <select name="smoothieId">
+                <option th:each="smoothie: ${smoothiet}" th:value="${smoothie.id}" th:text="${smoothie.nimi}">
+                    smoothie
+                </option>
+            </select> 
+            <br/>
+            Lisattava raaka-aine:<br/>
+            <select name="raakaAineId">
+                <option th:each="smoothie: ${raakikset}" th:value="${smoothie.id}" th:text="${smoothie.nimi}">
+                    raakis
+                </option>
+            </select> 
+            <br/>
+            Jarjestys<br/>
+            <input type ="text" name="jarjestys"/><br/>
+            Maara<br/>
+            <input type ="text" name="maara"/><br/>
+            Ohje<br/>
+            <input type ="text" name="ohje"/>
+            <br/>
+
+            <input type="Submit" value="Lisaa"></input>
+
+        </form>
+
 
         <a th:href="@{~/paasivu}">
             Smoothielistaukseen
