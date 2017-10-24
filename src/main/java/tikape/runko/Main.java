@@ -1,6 +1,9 @@
 package tikape.runko;
 
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import spark.ModelAndView;
 import spark.Spark;
 import static spark.Spark.*;
@@ -12,6 +15,7 @@ import tikape.runko.database.SmoothieDao;
 import tikape.runko.database.SmoothieRaakaAineDao;
 import tikape.runko.domain.RaakaAine;
 import tikape.runko.domain.Smoothie;
+import tikape.runko.domain.SmoothieRaakaAine;
 
 public class Main {
 
@@ -74,8 +78,17 @@ public class Main {
         
         Spark.get("/smoothie/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("smoothiet", smoothies.findAll());
+            Integer id = Integer.parseInt(req.params(":id"));           
+            List<SmoothieRaakaAine> lista = smoothieRaakaAineet.findAll(smoothies.findOne(id));
+            List<RaakaAine> raakislista = new ArrayList<>();
+            for (SmoothieRaakaAine a : lista) {
+            raakislista.add(raakaAineet.findOne(a.getRaakaAineId()));
+            }
+            map.put("smoothie", smoothies.findOne(id));
+            map.put("raakikset", raakislista);
+            map.put("smoothieRaakikset", lista);
             return new ModelAndView(map, "smoothie");
+            
             
         }, new ThymeleafTemplateEngine());     
    
