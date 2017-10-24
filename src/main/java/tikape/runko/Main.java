@@ -1,6 +1,5 @@
 package tikape.runko;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +58,7 @@ public class Main {
 
             return new ModelAndView(map, "paasivu");
         }, new ThymeleafTemplateEngine());
-               
+
         Spark.get("/toiminnot", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("smoothiet", smoothies.findAll());
@@ -67,7 +66,7 @@ public class Main {
 
             return new ModelAndView(map, "toiminnot");
         }, new ThymeleafTemplateEngine());
-        
+
         Spark.post("/toiminnot", (req, res) -> {
             String nimi = req.queryParams("name");
             Smoothie juoma = new Smoothie(-1, nimi);
@@ -76,24 +75,34 @@ public class Main {
             res.redirect("/toiminnot");
             return "";
         });
-        
+
+        Spark.post("/toiminnot/data", (req, res) -> {
+            Integer smoothieId = Integer.parseInt(req.queryParams("smoothieId"));
+            Integer raakisId = Integer.parseInt(req.queryParams("raakisId"));
+            String jarjestys = req.queryParams("jarjestys");
+            String maara = req.queryParams("maara");
+            String ohje = req.queryParams("ohje");
+            
+            smoothieRaakaAineet.save(new SmoothieRaakaAine(raakisId, smoothieId, jarjestys, maara, ohje));
+
+            res.redirect("/toiminnot");
+            return "";
+        });
+
         Spark.get("/smoothie/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            Integer id = Integer.parseInt(req.params(":id"));           
-            List<SmoothieRaakaAine> lista = smoothieRaakaAineet.findAll(smoothies.findOne(id));
-            List<RaakaAine> raakislista = new ArrayList<>();
+            Integer id = Integer.parseInt(req.params(":id"));
+            List<SmoothieRaakaAine> lista = smoothieRaakaAineet.findAll(id);
+            List<String> tulostettavat = new ArrayList<>();
             for (SmoothieRaakaAine a : lista) {
-            raakislista.add(raakaAineet.findOne(a.getRaakaAineId()));
+                tulostettavat.add(raakaAineet.findOne(a.getRaakaAineId()).getNimi() + ": " + a.getJarjestys() + " " + a.getMaara() + " " + a.getOhje());
             }
+            map.put("tulosteet", tulostettavat);
             map.put("smoothie", smoothies.findOne(id));
-            map.put("raakikset", raakislista);
-            map.put("smoothieRaakikset", lista);
-            map.put("kaikkiRaakikset", raakaAineet.findAll());
             return new ModelAndView(map, "smoothie");
-            
-            
-        }, new ThymeleafTemplateEngine());     
-   
+
+        }, new ThymeleafTemplateEngine());
+
 //        get("/", (req, res) -> {
 //            HashMap map = new HashMap<>();
 //            map.put("viesti", "tervehdys");

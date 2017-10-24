@@ -18,10 +18,10 @@ public class SmoothieRaakaAineDao {
         this.database = database;
     }
 
-    public List<SmoothieRaakaAine> findAll(Smoothie juoma) throws SQLException {
+    public List<SmoothieRaakaAine> findAll(Integer id) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM SmoothieRaakaAine WHERE smoothie_id = ?");
-        stmt.setInt(1, juoma.getId());
+        stmt.setInt(1, id);
 
         ResultSet rs = stmt.executeQuery();
         List<SmoothieRaakaAine> juomanTiedot = new ArrayList<>();
