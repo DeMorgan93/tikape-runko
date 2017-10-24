@@ -87,6 +87,7 @@ public class Main {
             map.put("smoothie", smoothies.findOne(id));
             map.put("raakikset", raakislista);
             map.put("smoothieRaakikset", lista);
+            map.put("kaikkiRaakikset", raakaAineet.findAll());
             return new ModelAndView(map, "smoothie");
             
             
