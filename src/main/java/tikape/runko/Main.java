@@ -22,7 +22,7 @@ public class Main {
         Database database = new Database("jdbc:sqlite:smoothiedata.db");
         database.init();
 
-        OpiskelijaDao opiskelijaDao = new OpiskelijaDao(database);
+//        OpiskelijaDao opiskelijaDao = new OpiskelijaDao(database);
 
         SmoothieDao smoothies = new SmoothieDao(database);
         RaakaAineDao raakaAineet = new RaakaAineDao(database);
